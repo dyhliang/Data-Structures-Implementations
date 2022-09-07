@@ -1,8 +1,6 @@
 # Description: This class contains functions that can be used to modify the dynamic array ADT.
 
 
-from enum import unique
-from xmlrpc.client import Boolean
 from static_array import StaticArray
 
 
@@ -112,7 +110,7 @@ class DynamicArray:
         """
         Changes capacity of the dynamic array.
 
-        param: new_capacity - a positive integer that should be greater than or equal to 
+        param: new_capacity - a positive integer that should be greater than or equal to
                             the current size of the array.
 
         returns: None
@@ -150,7 +148,7 @@ class DynamicArray:
 
     def insert_at_index(self, index: int, value: object) -> None:
         """
-        Adds a new value at the specified index in the DA. 
+        Adds a new value at the specified index in the DA.
 
         param: index - an integer position to insert the new object
                value - an object that is inserted at the index above
@@ -163,12 +161,12 @@ class DynamicArray:
             self.resize(2 * self._capacity)
 
         # Raises an exception if the index is not in the valid range
-        if index not in range(0, self._size+1):
+        if index not in range(0, self._size + 1):
             raise DynamicArrayException
 
         # Shifts the values at the indices after the insertion forward
         for pos in range(self._size, index, -1):
-            self._data[pos] = self._data[pos-1]
+            self._data[pos] = self._data[pos - 1]
 
         # Performs the insertion, updates size of array
         self._size += 1
@@ -176,11 +174,11 @@ class DynamicArray:
 
     def remove_at_index(self, index: int) -> None:
         """
-        Remove a new value at the specified index in the DA. 
+        Remove a new value at the specified index in the DA.
 
         param: index - an integer position to remove the new object
 
-        return: None        
+        return: None
         """
 
         # Raises an exception if the index is not in the valid range
@@ -195,8 +193,8 @@ class DynamicArray:
                 self._capacity = self._size * 2
 
         # Shifts the values at the indices after the removal back, then updates the size
-        for pos in range(index, self._data.length()-1):
-            self._data[pos] = self._data[pos+1]
+        for pos in range(index, self._data.length() - 1):
+            self._data[pos] = self._data[pos + 1]
 
         self._size -= 1
 
@@ -217,7 +215,7 @@ class DynamicArray:
 
         # Creates new DA to store the requested range of numbers
         new_arr = DynamicArray()
-        for start_index in range(start_index, start_index+size):
+        for start_index in range(start_index, start_index + size):
             new_arr.append(self._data[start_index])
 
         return new_arr
@@ -240,7 +238,7 @@ class DynamicArray:
         Produces new DA where each value is derived from a given function to the corresponding
         values from the original array.
 
-        param: map_func - an anonymous function with its own set of parameters 
+        param: map_func - an anonymous function with its own set of parameters
 
         return: a DynamicArray with the modified values from the mapped functions
         """
@@ -256,7 +254,7 @@ class DynamicArray:
         """
         Produces new DA with only elements from original array for which filter_func returns true.
 
-        param: filter_func - a boolean function 
+        param: filter_func - a boolean function
 
         return: a modified DA with elements for which filter_func returns True
         """
@@ -273,7 +271,7 @@ class DynamicArray:
         """
         Sequentially applies reduce_func to all elements in DA
 
-        param: reduce_func - an anonymous function with its own set of parameters 
+        param: reduce_func - an anonymous function with its own set of parameters
                initializer - an integer, otherwise a default argument
 
         return: an object that is the result of the reduce function
@@ -299,14 +297,25 @@ class DynamicArray:
 
         return result
 
-            
+    def pop(self) -> int:
+        """
+        Removes the last item in a DA and updates size count
+
+        @Param: None
+        @Return: the integer at the last index
+        """
+        pop_last = self._data[self._size - 1]
+        self._size -= 1
+        return pop_last
+
+
 def find_mode(arr: DynamicArray) -> (DynamicArray, int):
     """
     Finds the mode and frequency of such value in a non-descending/ascending DynamicArray.
 
     param: arr - a sorted DynamicArray that is non-descending/ascending
 
-    return: a tuple - (DynamicArra of the mode value(s), 
+    return: a tuple - (DynamicArra of the mode value(s),
                     integer representing highest frequency of modul value(s))
     """
 
@@ -314,7 +323,7 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
     unique_vals = DynamicArray()
     unique_vals.append(arr[0])
     for pos in range(1, arr.length()):
-        if arr[pos] != arr[pos-1]:
+        if arr[pos] != arr[pos - 1]:
             unique_vals.append(arr[pos])
 
     # Creates an occurrence array with same size as unique_vals, filling it with 0s to increment.
@@ -332,7 +341,7 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
             unique_pos += 1
             if occ_arr[unique_pos] == 0:
                 occ_arr[unique_pos] += 1
-    
+
     # Creates mode array to store unique values that are modes
     # Uses standard algorithm to find the max of the occurrences array's values
     # Uses >= instead of > because we want to find modes with same frequency value, not just the first
@@ -349,6 +358,7 @@ def find_mode(arr: DynamicArray) -> (DynamicArray, int):
             mode_arr.append(unique_vals[pos])
 
     return mode_arr, max_freq
+
 
 # ------------------- BASIC TESTING -----------------------------------------
 
@@ -524,17 +534,22 @@ if __name__ == "__main__":
 
     print("\n# map example 2")
 
+
     def double(value):
         return value * 2
+
 
     def square(value):
         return value ** 2
 
+
     def cube(value):
         return value ** 3
 
+
     def plus_one(value):
         return value + 1
+
 
     da = DynamicArray([plus_one, double, square, cube])
     for value in [1, 10, 20]:
@@ -542,8 +557,10 @@ if __name__ == "__main__":
 
     print("\n# filter example 1")
 
+
     def filter_a(e):
         return e > 10
+
 
     da = DynamicArray([1, 5, 10, 15, 20, 25])
     print(da)
@@ -553,8 +570,10 @@ if __name__ == "__main__":
 
     print("\n# filter example 2")
 
+
     def is_long_word(word, length):
         return len(word) > length
+
 
     da = DynamicArray("This is a sentence with some long words".split())
     print(da)
@@ -596,3 +615,9 @@ if __name__ == "__main__":
         da.append(case[x])
         mode, frequency = find_mode(da)
         print(f"{da}\nMode: {mode}, Frequency: {frequency}")
+
+    print("\n# pop - example 1")
+    da = DynamicArray([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    print(f"DYN_ARR before: {da}")
+    print(f"Popped value: {da.pop()}")
+    print(f"DYN_ARR after: {da}")

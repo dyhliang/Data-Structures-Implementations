@@ -1,6 +1,5 @@
 # Description: Implements the Stack ADT with a singly linked list.
 
-
 from SLNode import SLNode
 
 
