@@ -12,7 +12,6 @@ class StaticArray:
     Implemented methods: get(), set(), length()
 
     DO NOT CHANGE THIS CLASS IN ANY WAY
-    YOU ARE ALLOWED TO CREATE AND USE OBJECTS OF THIS CLASS IN YOUR SOLUTION
     """
 
     def __init__(self, size=10) -> None:
@@ -127,9 +126,3 @@ if __name__ == "__main__":
 
     # print the number of elements stored in the array
     print(arr.length())
-
-    # Special consideration below #
-
-    # Don't do this! This creates a built-in Python list and if you use
-    # one you'll lose points.
-    forbidden_list = [None] * 10
